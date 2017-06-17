@@ -1,16 +1,73 @@
 ﻿// Write your Javascript code.
 $(document).ready(function () {
-    var lineChartData = [{ time: 1370044800, y: 100 }, { time: 1370044801, y: 1000 }, { time: 1370044803, y: 100 },
-    { time: 1370044805, y: 1000 }, { time: 1370044808, y: 100 }, { time: 1370044810, y: 1000 }];
+    
 
-    lineChartData.forEach(function (element) {
-        console.log(element.time);
+  
+
+
+
+
+
+
+
+
+
+
+    
+
+    var sinLayer = { label: 'sin', values: [] },
+        cosLayer = { label: 'cos', values: [] }
+
+    for (var x = 0; x <= 2 * Math.PI; x += Math.PI / 64) {
+        sinLayer.values.push({ x: x, y: Math.sin(x) + 1 });
+        cosLayer.values.push({ x: x, y: Math.cos(x) + 1 });
+    }
+
+    var chart = $('#chart').epoch({
+        type: 'area',
+        data: [sinLayer, cosLayer],
+        axes: ['left', 'right']
     });
 
+    Date.now = function () { return new Date().getTime(); }
 
-    var myChart=$('#lineChart').epoch({
-        type: 'time.line',
-        data: lineChartData
+    
+
+
+    ///////////////this function generates the date and time in milliseconds//////////
+    function getTimeValue() {
+        var dateBuffer = new Date();
+        var Time = dateBuffer.getTime();
+        return Time;
+    }
+
+    ////////////// this function generates a random value ////////////////////////////
+    function getRandomValue() {
+        var randomValue = Math.random() * 100;
+        return randomValue;
+    }
+
+    ////////////// this function is used to update the chart values ///////////////	
+    $("#updateMessage").click(function () {
+
+       
+
+    })
+   
+
+    ////////////// real time graph generation////////////////////////////////////////	  
+    var barChartData = [{
+        label: "Series 1",
+        values: [{
+            time: getTimeValue(),
+            y: getRandomValue()
+        }]
+    },];
+
+    var barChartInstance = $('#barChart').epoch({
+        type: 'time.bar',
+        axes: ['right', 'bottom', 'left'],
+        data: barChartData
     });
 
    
@@ -134,7 +191,20 @@ $(document).ready(function () {
                 nextDataPoint.time = helligkeit.timestamp;
                 nextDataPoint.y = helligkeit.helligkeit;
 
-                myChart.push(nextDataPoint);
+                var newBarChartData = [{ time: getTimeValue(), y: helligkeit.helligkeit }];
+
+                /* Wrong: don't use the full configuration for an update.
+                var newBarChartData = [{
+                  label: "Series 1",
+                  values: [{
+                    time: getTimeValue(),
+                    y: getRandomValue()
+                  }]
+                }, ];
+                */
+                barChartInstance.push(newBarChartData);
+
+                
 
         }
 

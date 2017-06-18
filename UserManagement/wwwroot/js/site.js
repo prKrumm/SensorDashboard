@@ -2,19 +2,6 @@
 $(document).ready(function () {
     
 
-  
-
-
-
-
-
-
-
-
-
-
-    
-
     var sinLayer = { label: 'sin', values: [] },
         cosLayer = { label: 'cos', values: [] }
 
@@ -152,7 +139,7 @@ $(document).ready(function () {
         // Once a connection has been made, make a subscription and send a message.
         console.log("onConnect Hive");
         clientHive.subscribe("Brightness/Register");
-        clientHive.subscribe("BaWue/77743/Haus1/light-180591/Sensor");
+        clientHive.subscribe("Brightness/light-180591/Sensor");
 
 
         $("#hell").css("border-color", "green");
@@ -166,7 +153,7 @@ $(document).ready(function () {
         if (responseObject.errorCode !== 0) {
             console.log("onConnectionLost:" + responseObject.errorMessage);
             $("#hell").css("border-color", "red");
-
+           
         }
     }
 
@@ -186,25 +173,50 @@ $(document).ready(function () {
             default:
                 //Helligkeit Verarbeitung
                 //{"id":"light-180591","helligkeit":12345,"timestamp":12345}
-                var helligkeit = JSON.parse(message.payloadString); 
-                var nextDataPoint = new Object();
-                nextDataPoint.time = helligkeit.timestamp;
-                nextDataPoint.y = helligkeit.helligkeit;
+                try {
+                    var helligkeit = JSON.parse(message.payloadString);
+                    if (helligkeit.helligkeit !== null) {
+                        var nextDataPoint = new Object();
+                        nextDataPoint.time = helligkeit.timestamp;
+                        nextDataPoint.y = helligkeit.helligkeit;
 
-                var newBarChartData = [{ time: getTimeValue(), y: helligkeit.helligkeit }];
+                        var newBarChartData = [{ time: getTimeValue(), y: helligkeit.helligkeit }];
 
-                /* Wrong: don't use the full configuration for an update.
-                var newBarChartData = [{
-                  label: "Series 1",
-                  values: [{
-                    time: getTimeValue(),
-                    y: getRandomValue()
-                  }]
-                }, ];
-                */
-                barChartInstance.push(newBarChartData);
+                        //hell ändern
+                        //id hellWert       hellZeitWert
+                        $("#hellWert").html(helligkeit.helligkeit);
 
-                
+                        /* Wrong: don't use the full configuration for an update.
+                        var newBarChartData = [{
+                          label: "Series 1",
+                          values: [{
+                            time: getTimeValue(),
+                            y: getRandomValue()
+                          }]
+                        }, ];
+                        */
+                        barChartInstance.push(newBarChartData);
+                        //Helligkeit Verarbeitung
+                        //{"id":"light-180591","temperatur":12345,"timestamp":12345}
+                        //eher null prüfen für attribut????
+                    } if (helligkeit.temperatur !== null) {
+
+                        var nextDataPoint = new Object();
+                        nextDataPoint.time = helligkeit.timestamp;
+                        nextDataPoint.y = helligkeit.temperatur;
+
+                        var newBarChartData = [{ time: getTimeValue(), y: helligkeit.helligkeit }];
+
+                        //hell ändern
+                        //id hellWert       hellZeitWert
+                        $("#tempWert").html(helligkeit.temperatur);
+
+
+
+                    }
+                } catch (e) {
+                    console.log('invalid json');
+                }
 
         }
 
@@ -213,35 +225,101 @@ $(document).ready(function () {
 
         $("#hellConnect").click(function () {
 
-            message = new Paho.MQTT.Message("CON:light-180591");
-            message.destinationName = "Brightness/Register";
-            clientHive.send(message);
+            var hellTempConn = $(this).css("color");
+            //Send Registration
+            if (hellTempConn !== "green") {
+                console.log("css color:" + hellTempConn);
+                message = new Paho.MQTT.Message("CON:light-180591");
+                message.destinationName = "Brightness/Register";
+                clientHive.send(message);
+
+                $(this).css("color", "green");
+            } else {
+                //Send Disconnect
+                console.log("Disconnect css color:" + hellTempConn);
+                message = new Paho.MQTT.Message("DISC:light-180591");
+                message.destinationName = "Brightness/light-180591/Server";
+                clientHive.send(message);
+
+            }
 
     })
 
-        $("#hellÄndern").click(function () {
+        $("#sendBtnHell").click(function () {
+            $('#newDiv1').hide("slow");
 
-            message = new Paho.MQTT.Message("SYST:PER:1000");
-            message.destinationName = "BaWue/77743/Haus1/light-180591/Server";
-            clientHive.send(message);
-
+            var neuerWert = $("#inputHell").val();
+            var re = new RegExp("\\d+");
+            if (re.test(neuerWert)) {
+                message = new Paho.MQTT.Message("SYST:PER:" + neuerWert);
+                console.log("neuerWert:" + neuerWert);
+                message.destinationName = "Brightness/light-180591/Server";
+                clientHive.send(message);
+                $("#hellZeitWert").html(neuerWert);
+            }
         })
 
+        $("#hellÄndern").click(function () {
+            var dispalay = $("#newDiv1").css("display");
+            if (dispalay == "none") {
+                $("#newDiv1").show("slow");
+            } else {
+                $("#newDiv1").hide("slow");
+            }
+            
+        })
+
+        
+       
+
+        
+
         $("#tempConnect").click(function () {
+            var colorTempConn = $(this).css("color");
+            //Send Registration
+            if (colorTempConn !== "green") {
+                console.log("css color:" + colorTempConn);
             message = new Paho.MQTT.Message("CON:light-180591");
             message.destinationName = "Brightness/Register";
             clientHive.send(message);
 
             $(this).css("color", "green");
+            } else {
+                //Send Disconnect
+                console.log("Disconnect css color:" + color);
+                message = new Paho.MQTT.Message("DISC:light-180591");
+                message.destinationName = "Brightness/light-180591/Server";
+                clientHive.send(message);
+
+            }
+               
 
         })
 
+      
+
         $("#tempÄndern").click(function () {
 
-            message = new Paho.MQTT.Message("SYST:PER:1000");
-            message.destinationName = "BaWue/77743/Haus1/light-180591/Server";
-            clientHive.send(message);
+            var dispalay = $("#newDiv2").css("display");
+            if (dispalay == "none") {
+                $("#newDiv2").show("slow");
+            } else {
+                $("#newDiv2").hide("slow");
+            }
+           
+        })
+        $("#sendBtnTemp").click(function () {
+            $('#newDiv2').hide("slow");
 
+            var neuerWert = $("#inputTemp").val();
+            var re = new RegExp("\\d+");
+            if (re.test(neuerWert)) {
+                message = new Paho.MQTT.Message("SYST:PER:" + neuerWert);
+                console.log("neuerWert:" + neuerWert);
+                message.destinationName = "Brightness/light-180591/Server";
+                clientHive.send(message);
+                $("#tempZeitWert").html(neuerWert);
+            }
         })
 
        

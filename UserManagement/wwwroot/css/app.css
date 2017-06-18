@@ -15,7 +15,12 @@ body {
     z-index:0;
     position:absolute;
 }
-
+#newDiv1 {
+    display: none;
+}
+#newDiv2 {
+    display: none;
+}
 #page-wrapper{
     background-color: #191E27;
     z-index:0;

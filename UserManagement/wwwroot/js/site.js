@@ -153,6 +153,7 @@ $(document).ready(function () {
         if (responseObject.errorCode !== 0) {
             console.log("onConnectionLost:" + responseObject.errorMessage);
             $("#hell").css("border-color", "red");
+            clientHive.connect({ onSuccess: onConnect });
            
         }
     }
@@ -166,10 +167,10 @@ $(document).ready(function () {
                 console.log("CON:Success Hive");
                 $("#hellConnect").css("color", "green");
                 break;
-            case "DISC:Success":
+            case "DISC:Success": DISC: Success
                 console.log("DISC:Success Hive");
                 $("#hellConnect").css("color", "red");
-                break;
+                break; 
             default:
                 //Helligkeit Verarbeitung
                 //{"id":"light-180591","helligkeit":12345,"timestamp":12345}
@@ -185,7 +186,7 @@ $(document).ready(function () {
                         //hell ändern
                         //id hellWert       hellZeitWert
                         $("#hellWert").html(helligkeit.helligkeit);
-
+                        $("#hellConnect").css("color", "green");
                         /* Wrong: don't use the full configuration for an update.
                         var newBarChartData = [{
                           label: "Series 1",
@@ -227,7 +228,7 @@ $(document).ready(function () {
 
             var hellTempConn = $(this).css("color");
             //Send Registration
-            if (hellTempConn !== "green") {
+            if (hellTempConn !== "rgb(0, 128, 0)") {
                 console.log("css color:" + hellTempConn);
                 message = new Paho.MQTT.Message("CON:light-180591");
                 message.destinationName = "Brightness/Register";

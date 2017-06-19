@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TemperaturSensor": {
+      "commandName": "Project",
+      "commandLineArgs": "Haus1 280591"
+    }
+  }
+}

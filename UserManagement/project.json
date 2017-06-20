@@ -14,7 +14,6 @@
 		"Microsoft.EntityFrameworkCore.Tools": "1.1.1",
 		"Microsoft.Extensions.Configuration.UserSecrets": "1.1.2",
 		"Microsoft.Extensions.Logging.Debug": "1.1.2",
-		"Microsoft.VisualStudio.Web.CodeGeneration.Design": "1.1.1",
 		"Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
 		"Npgsql": "3.2.4"
 	},

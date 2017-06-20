@@ -2,16 +2,16 @@
 {
 "userSecretsId": "aspnet-UserManagement-6d3a43b3-10de-43b6-b1b6-1286a2c04310",
 "dependencies": {
-"Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
-"Microsoft.AspNetCore.Diagnostics": "1.0.0",
-"Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
-"Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+"Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
+"Microsoft.AspNetCore.Diagnostics": "1.1.0",
+"Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
+"Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
 "Microsoft.AspNetCore.Razor.Tools": {
-"version": "1.0.0-preview2-final",
+"version": "1.1.0-preview2-final",
 "type": "build"
 },
-"Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
-"Microsoft.AspNetCore.StaticFiles": "1.0.0",
+"Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
+"Microsoft.AspNetCore.StaticFiles": "1.1.0",
 "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
 "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1",
 "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
@@ -23,10 +23,10 @@
 "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
 "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
 "BundlerMinifier.Core": "2.2.281",
-"Microsoft.AspNetCore.Mvc": "1.0.1",
-"Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
+"Microsoft.AspNetCore.Mvc": "1.1.1",
+"Microsoft.AspNetCore.Server.Kestrel": "1.1.1",
 "Microsoft.NETCore.App": {
-"version": "1.0.1",
+"version": "1.1.1",
 "type": "platform"
 },
 "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
@@ -39,8 +39,8 @@
 },
 
 "tools": {
-"Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
-"Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
+"Microsoft.AspNetCore.Razor.Tools": "1.1.0-preview2-final",
+"Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview2-final",
 "Microsoft.Extensions.SecretManager.Tools": "1.0.0-preview2-final",
 "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",
 "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
@@ -51,7 +51,7 @@
 },
 
 "frameworks": {
-"netcoreapp1.0": {
+"netcoreapp1.1": {
 "imports": [
 "dotnet5.6",
 "portable-net45+win8"

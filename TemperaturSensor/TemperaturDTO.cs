@@ -7,9 +7,9 @@ namespace TemperaturSensor
     //{"id":"light-180591","temperatur":12345,"timestamp":12345}
     class TemperaturDTO
     {
-        public string Id { get; set; }
-        public int Temperatur { get; set; }
-        public int Timestamp { get; set; }
+        public string id { get; set; }
+        public int temperatur { get; set; }
+        public int timestamp { get; set; }
 
     }
 }

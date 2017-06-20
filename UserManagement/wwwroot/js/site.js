@@ -24,7 +24,7 @@ $(document).ready(function () {
     ///////////////this function generates the date and time in milliseconds//////////
     function getTimeValue() {
         var dateBuffer = new Date();
-        var Time = dateBuffer.getTime();
+        var Time = dateBuffer.getTime()/1000;
         return Time;
     }
 
@@ -52,6 +52,20 @@ $(document).ready(function () {
     },];
 
     var barChartInstance = $('#barChart').epoch({
+        type: 'time.bar',
+        axes: ['right', 'bottom', 'left'],
+        data: barChartData
+    });
+
+    var barChartDataTemp = [{
+        label: "Series 1",
+        values: [{
+            time: getTimeValue(),
+            y: getRandomValue()
+        }]
+    },];
+
+    var barChartInstanceTemp = $('#barChartTemp').epoch({
         type: 'time.bar',
         axes: ['right', 'bottom', 'left'],
         data: barChartData
@@ -90,7 +104,9 @@ $(document).ready(function () {
     function onConnect2() {
         // Once a connection has been made, make a subscription and send a message.
         console.log("onConnect Cloud mqtt");
-        client.subscribe("/cloudmqtt/#");
+        client.subscribe("Brightness/Register");
+        //BaWue/77743/Haus1/light-280591/Server	
+        client.subscribe("BaWue/77743/Haus1/light-280591/Sensor");
         message = new Paho.MQTT.Message("Hello CloudMQTT");
         message.destinationName = "/cloudmqtt";
         client.send(message);
@@ -109,6 +125,8 @@ $(document).ready(function () {
         if (responseObject.errorCode !== 0) {
             console.log("onConnectionLost:" + responseObject.errorMessage);
             $("#temp").css("border-color", "red");
+            // connect the client
+            client.connect(options);
 
 
         }
@@ -117,9 +135,51 @@ $(document).ready(function () {
     // called when a message arrives
     function onMessageArrived2(message) {
         console.log("onMessageArrived:" + message.payloadString);
+        console.log("onMessageArrived:" + message.payloadString);
+        //überprüfen 
+        switch (message.payloadString) {
+            case "CON:Success":
+                console.log("CON:Success CloudMQTT");
+                $("#tempConnect").css("color", "green");
+                client.subscribe("BaWue/77743/Haus1/light-280591/Sensor");
+
+                break;
+            case "DISC:Success":
+                console.log("DISC:Success");
+                client.unsubscribe("BaWue/77743/Haus1/light-280591/Sensor");
+
+                $("#tempConnect").css("color", "rgb(204,0,0)");
+
+                break;
+            default:
+                //Helligkeit Verarbeitung
+                //{"id":"light-180591","helligkeit":12345,"timestamp":12345}
+                try {
+                    console.log("message.payloadString");
+                    var temperatur = JSON.parse(message.payloadString);
+                    if (temperatur.temperatur !== null) {
+                        var nextDataPointTemp = new Object();
+                        nextDataPointTemp.time = getTimeValue();
+                        nextDataPointTemp.y = temperatur.temperatur;
+
+                        var newBarChartDataTemp = [{ time: getTimeValue(), y: temperatur.temperatur }];
+
+                        //hell ändern
+                        //id hellWert       hellZeitWert
+                        $("#tempWert").html(temperatur.temperatur);
+                        
+
+                        barChartInstanceTemp.push(newBarChartDataTemp);
+                        //Helligkeit Verarbeitung
+                        //{"id":"light-180591","temperatur":12345,"timestamp":12345}
+
+                    }
+                } catch (e) {
+                    console.log('invalid json');
+                }
+        }
+
     }
-
-
 
     //HiveMQ
     var portHive = 8000;
@@ -166,10 +226,15 @@ $(document).ready(function () {
             case "CON:Success":
                 console.log("CON:Success Hive");
                 $("#hellConnect").css("color", "green");
+                clientHive.subscribe("Brightness/light-180591/Sensor");
+
                 break;
-            case "DISC:Success": DISC: Success
+            case "DISC:Success": 
                 console.log("DISC:Success Hive");
-                $("#hellConnect").css("color", "red");
+                clientHive.unsubscribe("Brightness/light-180591/Sensor");
+
+                $("#hellConnect").css("color", "rgb(204,0,0)");
+
                 break; 
             default:
                 //Helligkeit Verarbeitung
@@ -186,7 +251,7 @@ $(document).ready(function () {
                         //hell ändern
                         //id hellWert       hellZeitWert
                         $("#hellWert").html(helligkeit.helligkeit);
-                        $("#hellConnect").css("color", "green");
+                        
                         /* Wrong: don't use the full configuration for an update.
                         var newBarChartData = [{
                           label: "Series 1",
@@ -200,21 +265,7 @@ $(document).ready(function () {
                         //Helligkeit Verarbeitung
                         //{"id":"light-180591","temperatur":12345,"timestamp":12345}
                         //eher null prüfen für attribut????
-                    } if (helligkeit.temperatur !== null) {
-
-                        var nextDataPoint = new Object();
-                        nextDataPoint.time = helligkeit.timestamp;
-                        nextDataPoint.y = helligkeit.temperatur;
-
-                        var newBarChartData = [{ time: getTimeValue(), y: helligkeit.helligkeit }];
-
-                        //hell ändern
-                        //id hellWert       hellZeitWert
-                        $("#tempWert").html(helligkeit.temperatur);
-
-
-
-                    }
+                    } 
                 } catch (e) {
                     console.log('invalid json');
                 }
@@ -227,7 +278,7 @@ $(document).ready(function () {
         $("#hellConnect").click(function () {
 
             var hellTempConn = $(this).css("color");
-            //Send Registration
+            //Send Registrationrgb(204,0,0)
             if (hellTempConn !== "rgb(0, 128, 0)") {
                 console.log("css color:" + hellTempConn);
                 message = new Paho.MQTT.Message("CON:light-180591");
@@ -262,7 +313,7 @@ $(document).ready(function () {
 
         $("#hellÄndern").click(function () {
             var dispalay = $("#newDiv1").css("display");
-            if (dispalay == "none") {
+            if (dispalay === "none") {
                 $("#newDiv1").show("slow");
             } else {
                 $("#newDiv1").hide("slow");
@@ -278,19 +329,19 @@ $(document).ready(function () {
         $("#tempConnect").click(function () {
             var colorTempConn = $(this).css("color");
             //Send Registration
-            if (colorTempConn !== "green") {
+            if (colorTempConn !== "rgb(0, 128, 0)") {
                 console.log("css color:" + colorTempConn);
-            message = new Paho.MQTT.Message("CON:light-180591");
+            message = new Paho.MQTT.Message("CON:light-280591");
             message.destinationName = "Brightness/Register";
-            clientHive.send(message);
+            client.send(message);
 
             $(this).css("color", "green");
             } else {
                 //Send Disconnect
-                console.log("Disconnect css color:" + color);
-                message = new Paho.MQTT.Message("DISC:light-180591");
-                message.destinationName = "Brightness/light-180591/Server";
-                clientHive.send(message);
+                console.log("Disconnect css color:" + colorTempConn);
+                message = new Paho.MQTT.Message("DISC:light-280591");
+                message.destinationName = "BaWue/77743/Haus1/light-280591/Server";
+                client.send(message);
 
             }
                
@@ -302,13 +353,14 @@ $(document).ready(function () {
         $("#tempÄndern").click(function () {
 
             var dispalay = $("#newDiv2").css("display");
-            if (dispalay == "none") {
+            if (dispalay === "none") {
                 $("#newDiv2").show("slow");
             } else {
                 $("#newDiv2").hide("slow");
             }
            
         })
+
         $("#sendBtnTemp").click(function () {
             $('#newDiv2').hide("slow");
 
@@ -317,8 +369,8 @@ $(document).ready(function () {
             if (re.test(neuerWert)) {
                 message = new Paho.MQTT.Message("SYST:PER:" + neuerWert);
                 console.log("neuerWert:" + neuerWert);
-                message.destinationName = "Brightness/light-180591/Server";
-                clientHive.send(message);
+                message.destinationName = "BaWue/77743/Haus1/light-280591/Server";
+                client.send(message);
                 $("#tempZeitWert").html(neuerWert);
             }
         })
@@ -330,5 +382,6 @@ $(document).ready(function () {
 
 
     });
+
 
 

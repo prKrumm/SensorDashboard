@@ -1,0 +1,58 @@
+{
+	"version": "1.1.0-*",
+	"dependencies": {
+		"Microsoft.ApplicationInsights.AspNetCore": "2.0.0",
+		"Microsoft.AspNetCore": "1.1.2",
+		"Microsoft.AspNetCore.Authentication.Cookies": "1.1.2",
+		"Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.2",
+		"Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.2",
+		"Microsoft.AspNetCore.Mvc": "1.1.3",
+		"Microsoft.AspNetCore.StaticFiles": "1.1.2",
+		"Microsoft.EntityFrameworkCore.Design": "1.1.2",
+		"Microsoft.EntityFrameworkCore.SqlServer": "1.1.2",
+		"Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.2",
+		"Microsoft.EntityFrameworkCore.Tools": "1.1.1",
+		"Microsoft.Extensions.Configuration.UserSecrets": "1.1.2",
+		"Microsoft.Extensions.Logging.Debug": "1.1.2",
+		"Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
+		"M2MqttDotnetCore":"1.0.6",
+		"MongoDB.Driver":"2.4.4",
+		"Newtonsoft.Json":"10.0.3",
+		"Npgsql": "3.2.4"
+	},
+	"frameworks": {
+		"netcoreapp1.1": {
+			"dependencies": {
+				"Microsoft.NETCore.App": {
+					"version": "1.1.0",
+					"type": "platform"
+				},
+				"System.Console": "4.0.0-*"
+			}
+		}
+	},
+	"publishOptions": {
+		"include": [
+			"DB/*",
+			"DTOs/*",
+		]
+	},
+
+	"buildOptions": {
+		"debugType": "portable",
+		"emitEntryPoint": true,
+		"preserveCompilationContext": true
+	},
+
+	"runtimeOptions": {
+		"configProperties": {
+			"System.GC.Server": true
+		}
+	},
+
+
+
+	"scripts": {
+		"postpublish": ["dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"]
+	}
+}

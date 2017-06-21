@@ -9,9 +9,9 @@ namespace EventHandler.DB
 {
     public class MongoDBContext
     {
-        public const string ConnectionString = "mongodb://userDSP:g8mYAonEarCBY55K@dbmongo/dbmongo";
+        public string ConnectionString = "mongodb://userDSP:g8mYAonEarCBY55K@dbmongo/dbmongo";
         
-        public const string DatabaseName = "dbmongo";
+        public string DatabaseName = "dbmongo";
        
         
         public static bool IsSSL { get; set; }
@@ -22,13 +22,13 @@ namespace EventHandler.DB
         {
             try
             {
-               
-                 
-                //MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(ConnectionString));
-                //if (IsSSL)
-                //{
-                //    settings.SslSettings = new SslSettings { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
-                //}
+                if (Environment.GetEnvironmentVariable("MONGODB_USER") !=null)
+                {
+                    string user = Environment.GetEnvironmentVariable("MONGODB_USER");
+                    string passwort = Environment.GetEnvironmentVariable("MONGODB_PASSWORD");
+
+                    ConnectionString = "mongodb://" + user + ":" +passwort  + "@dbmongo/dbmongo";
+                }
 
                var mongoClient = new MongoClient(ConnectionString);
                // var mongoClient = new MongoClient(testDB);

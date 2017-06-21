@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using UserManagement.Data;
 using UserManagement.Models;
 using UserManagement.Services;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace UserManagement
 {
@@ -41,7 +42,7 @@ namespace UserManagement
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

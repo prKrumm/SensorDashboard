@@ -85,7 +85,7 @@ namespace EventHandler
             }
             if (message.Contains("helligkeit"))
             {
-                HelligkeitDTO hellDTO = (HelligkeitDTO)JsonConvert.DeserializeObject(message);
+                HelligkeitDTO hellDTO = JsonConvert.DeserializeObject<HelligkeitDTO>(message);
                 HelligkeitMeasurement hellMeasurement = new HelligkeitMeasurement();
                 hellMeasurement.sensorid = hellDTO.id;
                 hellMeasurement.timestamp = hellDTO.timestamp;

@@ -10,7 +10,10 @@ namespace EventHandler.DB
     public class MongoDBContext
     {
         public const string ConnectionString = "mongodb://userMA4:XCNE32h4QG4fglxd@mongodb/sensorData";
+        
         public const string DatabaseName = "sensorData";
+       
+        
         public static bool IsSSL { get; set; }
 
         public IMongoDatabase _database { get; }
@@ -27,8 +30,12 @@ namespace EventHandler.DB
                 //    settings.SslSettings = new SslSettings { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
                 //}
 
-                var mongoClient = new MongoClient(ConnectionSetting.CONNECTION_STRING);
+               var mongoClient = new MongoClient(ConnectionSetting.CONNECTION_STRING);
+               // var mongoClient = new MongoClient(testDB);
+
                 _database = mongoClient.GetDatabase(ConnectionSetting.MONGODB_DATABASE);
+                //_database = mongoClient.GetDatabase(testDatabaseName);
+
             }
             catch (Exception ex)
             {

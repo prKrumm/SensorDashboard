@@ -174,23 +174,23 @@ namespace UserManagement.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("UserManagement.Models.Device", b =>
-                {
-                    b.Property<int>("DeviceId")
-                        .ValueGeneratedOnAdd();
+            //modelBuilder.Entity("UserManagement.Models.Device", b =>
+            //    {
+            //        b.Property<int>("DeviceId")
+            //            .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DeviceName");
+            //        b.Property<string>("DeviceName");
 
-                    b.Property<string>("Id");
+            //        b.Property<string>("Id");
 
-                    b.Property<int>("SensorType");
+            //        b.Property<int>("SensorType");
 
-                    b.HasKey("DeviceId");
+            //        b.HasKey("DeviceId");
 
-                    b.HasIndex("Id");
+            //        b.HasIndex("Id");
 
-                    b.ToTable("Device");
-                });
+            //        b.ToTable("Device");
+            //    });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
@@ -229,12 +229,12 @@ namespace UserManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("UserManagement.Models.Device", b =>
-                {
-                    b.HasOne("UserManagement.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("Id");
-                });
+            //modelBuilder.Entity("UserManagement.Models.Device", b =>
+            //    {
+            //        b.HasOne("UserManagement.Models.ApplicationUser", "User")
+            //            .WithMany()
+            //            .HasForeignKey("Id");
+            //    });
         }
     }
 }

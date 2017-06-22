@@ -17,26 +17,26 @@ namespace UserManagement.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles");
 
-            migrationBuilder.CreateTable(
-                name: "Device",
-                columns: table => new
-                {
-                    DeviceId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DeviceName = table.Column<string>(nullable: true),
-                    Id = table.Column<string>(nullable: true),
-                    SensorType = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Device", x => x.DeviceId);
-                    table.ForeignKey(
-                        name: "FK_Device_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Device",
+            //    columns: table => new
+            //    {
+            //        DeviceId = table.Column<int>(nullable: false)
+            //            .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+            //        DeviceName = table.Column<string>(nullable: true),
+            //        Id = table.Column<string>(nullable: true),
+            //        SensorType = table.Column<int>(nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Device", x => x.DeviceId);
+            //        table.ForeignKey(
+            //            name: "FK_Device_AspNetUsers_Id",
+            //            column: x => x.Id,
+            //            principalTable: "AspNetUsers",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Restrict);
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",

@@ -7,12 +7,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Data;
 using UserManagement.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserManagement.Controllers
 {
+    [Authorize]
     public class RückblickController : Controller
     {
         private readonly ApplicationDbContext _context;
+        
 
         public RückblickController(ApplicationDbContext context)
         {
@@ -22,7 +27,9 @@ namespace UserManagement.Controllers
         // GET: Rückblick
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Device.ToListAsync());
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return View(_context.Device.Where(b => b.User.Equals(currentUserID)).ToList());
         }
 
         // GET: Rückblick/Details/5

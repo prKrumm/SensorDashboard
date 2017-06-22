@@ -81,7 +81,7 @@ $(document).ready(function () {
 
 
     // Create a client instance
-    client = new Paho.MQTT.Client(host, port, "1234");
+    client = new Paho.MQTT.Client(host, port, "web_" + parseInt(Math.random() * 100, 10));
 
     //Example client = new Paho.MQTT.Client("m11.cloudmqtt.com", 32903, "web_" + parseInt(Math.random() * 100, 10));
 
@@ -106,7 +106,7 @@ $(document).ready(function () {
         console.log("onConnect Cloud mqtt");
         client.subscribe("Brightness/Register");
         //BaWue/77743/Haus1/light-280591/Server	
-        client.subscribe("BaWue/77743/Haus1/light-280591/Sensor");
+        client.subscribe("BaWue/77743/Haus1/temp-280591/Sensor");
         message = new Paho.MQTT.Message("Hello CloudMQTT");
         message.destinationName = "/cloudmqtt";
         client.send(message);
@@ -141,12 +141,12 @@ $(document).ready(function () {
             case "CON:Success":
                 console.log("CON:Success CloudMQTT");
                 $("#tempConnect").css("color", "green");
-                client.subscribe("BaWue/77743/Haus1/light-280591/Sensor");
+                client.subscribe("BaWue/77743/Haus1/temp-280591/Sensor");
 
                 break;
             case "DISC:Success":
                 console.log("DISC:Success");
-                client.unsubscribe("BaWue/77743/Haus1/light-280591/Sensor");
+                client.unsubscribe("BaWue/77743/Haus1/temp-280591/Sensor");
 
                 $("#tempConnect").css("color", "rgb(204,0,0)");
 
@@ -185,7 +185,7 @@ $(document).ready(function () {
     var portHive = 8000;
     var hostHive = "broker.hivemq.com";
 
-    clientHive = new Paho.MQTT.Client(hostHive, portHive, "1234");
+    clientHive = new Paho.MQTT.Client(hostHive, portHive, "web_" + parseInt(Math.random() * 100, 10));
 
     // set callback handlers
     clientHive.onConnectionLost = onConnectionLost;
@@ -331,7 +331,7 @@ $(document).ready(function () {
             //Send Registration
             if (colorTempConn !== "rgb(0, 128, 0)") {
                 console.log("css color:" + colorTempConn);
-            message = new Paho.MQTT.Message("CON:light-280591");
+                message = new Paho.MQTT.Message("CON:temp-280591");
             message.destinationName = "Brightness/Register";
             client.send(message);
 
@@ -339,8 +339,8 @@ $(document).ready(function () {
             } else {
                 //Send Disconnect
                 console.log("Disconnect css color:" + colorTempConn);
-                message = new Paho.MQTT.Message("DISC:light-280591");
-                message.destinationName = "BaWue/77743/Haus1/light-280591/Server";
+                message = new Paho.MQTT.Message("DISC:temp-280591");
+                message.destinationName = "BaWue/77743/Haus1/temp-280591/Server";
                 client.send(message);
 
             }
@@ -369,7 +369,7 @@ $(document).ready(function () {
             if (re.test(neuerWert)) {
                 message = new Paho.MQTT.Message("SYST:PER:" + neuerWert);
                 console.log("neuerWert:" + neuerWert);
-                message.destinationName = "BaWue/77743/Haus1/light-280591/Server";
+                message.destinationName = "BaWue/77743/Haus1/temp-280591/Server";
                 client.send(message);
                 $("#tempZeitWert").html(neuerWert);
             }

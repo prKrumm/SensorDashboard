@@ -13,10 +13,11 @@ namespace TemperaturSensor
     {
 
         MqttClient client;
-        string serverTopic = "BaWue/77743/Haus1/light-280591/Server";
+        string serverTopic = "BaWue/77743/Haus1/temp-280591/Server";
 
         const string registerTopic = "Brightness/Register";
-        string sensorTopic = "BaWue/77743/Haus1/light-280591/Sensor";
+        string sensorTopic = "BaWue/77743/Haus1/temp-280591/Sensor";
+        
         int periode;
         string SensorId;
         bool flag;
@@ -34,11 +35,11 @@ namespace TemperaturSensor
             Console.Write("starting");
             //init vars
             periode = 5;
-            serverTopic = "BaWue/77743/" + args[0] + "/light-" + args[1] + "/Server";
-            sensorTopic = "BaWue/77743/" + args[0] + "/light-" + args[1] + "/Sensor";
-            SensorId = "light-" + args[1];
+            serverTopic = "BaWue/77743/" + args[0] + "/temp-" + args[1] + "/Server";
+            sensorTopic = "BaWue/77743/" + args[0] + "/temp-" + args[1] + "/Sensor";
+            SensorId = "temp-" + args[1];
             flag = true;
-
+            Console.Write(serverTopic +" "+serverTopic);
 
             client = new MqttClient("m13.cloudmqtt.com", 19401, false, null, null, MqttSslProtocols.None);
             client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
@@ -84,7 +85,7 @@ namespace TemperaturSensor
             switch (message)
             {
                 //Connect
-                case "CON:light-280591":
+                case "CON:temp-280591":
                     flag = true;
                     //neue subscription
                     client.Subscribe(new string[] { registerTopic, serverTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
@@ -104,7 +105,7 @@ namespace TemperaturSensor
 
                     break;
                 //Disconnect
-                case "DISC:light-280591":
+                case "DISC:temp-280591":
                     //unsubscripe
                     client.Unsubscribe(new string[] { serverTopic, "/topic_2" });
                     client.Publish("Brightness/Register", // topic

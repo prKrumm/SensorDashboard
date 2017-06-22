@@ -2,187 +2,179 @@
     ViewData["Title"] = "Home Page";
 }
 
-@using Microsoft.AspNetCore.Identity
-@using UserManagement.Models
-
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
-@if (SignInManager.IsSignedIn(User))
-{
+@model IEnumerable<UserManagement.Models.Device>
 
 
-<div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-dashboard" id="hell">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Helligkeit</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
 
-                    <div class="huge" id="hellWert">100</div>
-                    <button class="btn btn-default btn-block" id="hellConnect">Connect</button>
-                    <div class="clearfix hell"></div>
-                   
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-dashboard">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Zeit Intervall </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="huge" id="hellZeitWert">5</div>
-                    <button class="btn btn-default btn-block" id="hellÄndern">Ändern</button>
-                    <div class="clearfix" id="hellDiv"></div>
-                    <div id="newDiv1"><input type="text" name="hellZeitWert" id="inputHell" placeholder="neuer Wert"><br><button class="btn btn-default btn-block" id="sendBtnHell">Send</button></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-dashboard" id="temp">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Temperatur</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="huge" id="tempWert">20</div>
-                    <button class="btn btn-default btn-block" id="tempConnect">Connect</button>
-                    <div class="clearfix temp"></div>
-                </div>
+    
 
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-dashboard">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Zeit Intervall </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-
-                    <div class="huge" id="tempZeitWert">20</div>
-                    <button class="btn btn-default btn-block" id="tempÄndern">Ändern</button>
-                    <div class="clearfix"></div>
-                    <div id="newDiv2"><input type="text" name="tempZeitWert" id="inputTemp" placeholder="neuer Wert"><br><button class="btn btn-default btn-block" id="sendBtnTemp">Send</button></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- /.row -->
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-dashboard">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Helligkeit </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.panel-heading -->
-
-                <div class="panel-body">
-                    <div id="barChart" class="epoch category10" style="width:1000px; height: 240px;"></div>
-                </div>
-
-
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            <div class="panel panel-dashboard">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Temperatur </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="panel-body">
-                    <div ng-controller="PerformanceDataController">
-                        <div id="barChartTemp" class="epoch category10" style="width:1000px; height: 240px;"></div>                  </div>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            <div class="panel panel-dashboard">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <div class="controls left"><i class="ion ion-more"></i></div>
-                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
-                            <div class="center">Responsive Timeline</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div ng-controller="PerformanceDataController">
-                        <div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-            <!-- /.col-lg-8 -->
-        </div>
-        <!-- /.col-lg-8 -->
-
-       
-    </div>
-
-    <!-- /.row -->
-</div>
-}
-else
-{   
-    <!-- /.panel -->
     <div id="page-wrapper">
-        <h2>Bitte Registrieren!</h2>
-        <div class="panel-body">
-            <a asp-area="" asp-controller="Account" asp-action="Register">Register</a> | 
-                <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
-            
+
+        @foreach (var item in Model)
+        {
+            @if (item.SensorType.Equals(DeviceType.LightSensor))
+            {
 
 
-        </div>
-        </div>
-        <!-- /.panel-body -->
+
+         <!-- /.Helligkeit -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-dashboard" id="hell">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="controls left"><i class="ion ion-more"></i></div>
+                                        <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                        <div class="center">@Html.DisplayFor(modelItem => item.DeviceName)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="huge" id="hellWert">100</div>
+                                <button class="btn btn-default btn-block" id="hellConnect">Connect</button>
+                                <div class="clearfix hell"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-dashboard">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="controls left"><i class="ion ion-more"></i></div>
+                                        <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                        <div class="center">Zeit Intervall </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="huge" id="hellZeitWert">5</div>
+                                <button class="btn btn-default btn-block" id="hellÄndern">Ändern</button>
+                                <div class="clearfix" id="hellDiv"></div>
+                                <div id="newDiv1"><input type="text" name="hellZeitWert" id="inputHell" placeholder="neuer Wert"><br><button class="btn btn-default btn-block" id="sendBtnHell">Send</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.row -->
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-dashboard">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <div class="controls left"><i class="ion ion-more"></i></div>
+                                            <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                            <div class="center">Helligkeit </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+
+                                <div class="panel-body">
+                                    <div id="barChart" class="epoch category10" style="width:1000px; height: 240px;"></div>
+                                </div>
+
+
+                                <!-- /.panel-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (item.SensorType.Equals(DeviceType.TemperatureSensor))
+            {
+                <!-- /.Temperatur -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-dashboard" id="temp">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="controls left"><i class="ion ion-more"></i></div>
+                                        <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                        <div class="center">@Html.DisplayFor(modelItem => item.DeviceName)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="huge" id="tempWert">20</div>
+                                <button class="btn btn-default btn-block" id="tempConnect">Connect</button>
+                                <div class="clearfix temp"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-dashboard">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="controls left"><i class="ion ion-more"></i></div>
+                                        <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                        <div class="center">Zeit Intervall </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="huge" id="tempZeitWert">20</div>
+                                <button class="btn btn-default btn-block" id="tempÄndern">Ändern</button>
+                                <div class="clearfix"></div>
+                                <div id="newDiv2"><input type="text" name="tempZeitWert" id="inputTemp" placeholder="neuer Wert"><br><button class="btn btn-default btn-block" id="sendBtnTemp">Send</button></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- /.panel -->
+                                <div class="panel panel-dashboard">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-center">
+                                                <div class="controls left"><i class="ion ion-more"></i></div>
+                                                <div class="controls right"><a class="remove"><i class="ion ion-minus-round"></i></a></div>
+                                                <div class="center">Temperatur </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div ng-controller="PerformanceDataController">
+                                            <div id="barChartTemp" class="epoch category10" style="width:1000px; height: 240px;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                           
+                                <!-- /.panel -->
+                                <!-- /.col-lg-8 -->
+                            </div>
+                            <!-- /.col-lg-8 -->
+
+
+                        </div>
+
+
+
+            <!-- /.row -->
+
+            }
         }
+
+
+                </div>
+
+        
 
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"

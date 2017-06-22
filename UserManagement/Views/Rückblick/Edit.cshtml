@@ -4,14 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-@using Microsoft.AspNetCore.Identity
-@using UserManagement.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
-@if (SignInManager.IsSignedIn(User))
-{
 
 <h2>Edit</h2>
 
@@ -46,22 +39,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-}
-else
-{
-    <!-- /.panel -->
-    <div id="page-wrapper">
-        <h2>Bitte Registrieren!</h2>
-        <div class="panel-body">
-            <a asp-area="" asp-controller="Account" asp-action="Register">Register</a> |
-            <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
 
-
-
-        </div>
-    </div>
-        <!-- /.panel-body -->
-}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

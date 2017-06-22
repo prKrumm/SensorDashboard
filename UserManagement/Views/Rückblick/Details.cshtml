@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/epoch.min.css">
 <h2>Details</h2>
 
 <div>
@@ -13,7 +14,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.DeviceName)
         </dt>
-        <dd>
+        <dd id="device">
             @Html.DisplayFor(model => model.DeviceName)
         </dd>
         <dt>
@@ -37,9 +38,16 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.DeviceId">Edit</a> |
+    <button class="btn btn-default btn-block" id="showDetails">Anfrage</button>
     <a asp-action="Index">Back to List</a>
+</div>
+<div class="panel-body">
+    <div id="barChartDetails" class="epoch category10" style="width:1000px; height: 240px;"></div>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/js/d3.min.js"></script>
+<script src="~/js/epoch.min.js"></script>
+
 <script src="~/js/datePicker.js"></script>
+

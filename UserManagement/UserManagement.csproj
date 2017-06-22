@@ -11,6 +11,11 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-UserManagement-6d3a43b3-10de-43b6-b1b6-1286a2c04310</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\datePicker.js" />
+    <Content Include="wwwroot\js\JavaScript.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />

@@ -4,17 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Rückblick</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.DeviceName)
                 </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeviceId)
+            </th>
                 <th>
                     @Html.DisplayNameFor(model => model.SensorType)
                 </th>
@@ -28,12 +29,14 @@
                 @Html.DisplayFor(modelItem => item.DeviceName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SensorType)
+                @Html.DisplayFor(modelItem => item.DeviceId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DeviceId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DeviceId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DeviceId">Delete</a>
+                @Html.DisplayFor(modelItem => item.SensorType)
+            </td>
+
+            <td>               
+                <a asp-action="Details" asp-route-id="@item.DeviceId">Details</a>              
             </td>
         </tr>
 }

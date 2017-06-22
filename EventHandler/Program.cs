@@ -68,9 +68,9 @@ namespace EventHandler
 
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            Debug.WriteLine("Received = " + Encoding.UTF8.GetString(e.Message) + " on topic " + e.Topic);
+            Console.Write("Received = " + Encoding.UTF8.GetString(e.Message) + " on topic " + e.Topic);
             var message = Encoding.UTF8.GetString(e.Message);
-
+           
             if (message.Contains("temperatur"))
             {
                 TemperaturDTO tempDto=JsonConvert.DeserializeObject<TemperaturDTO>(message);
@@ -81,7 +81,7 @@ namespace EventHandler
                 tempMeasurement.timestamp = tempDto.timestamp;
                 tempMeasurement.uuid = Guid.NewGuid().ToString();
                 dbContext.Temperatur(tempDto.id).InsertOne(tempMeasurement);
-
+                Console.Write("Inserted:" + tempMeasurement);
             }
             if (message.Contains("helligkeit"))
             {
@@ -92,6 +92,7 @@ namespace EventHandler
                 hellMeasurement.helligkeit = hellDTO.helligkeit;
                 hellMeasurement.uuid= Guid.NewGuid().ToString();
                 dbContext.Helligkeit(hellDTO.id).InsertOne(hellMeasurement);
+                Console.Write("Inserted:" + hellMeasurement);
             }
 
 

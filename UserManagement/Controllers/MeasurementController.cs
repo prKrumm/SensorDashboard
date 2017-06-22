@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.DTOs;
+using UserManagement.Data;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace UserManagement.Controllers
 {
@@ -11,23 +14,38 @@ namespace UserManagement.Controllers
     [Route("api/Measurement")]
     public class MeasurementController : Controller
     {
+        MongoDBContext dbContext;
         public MeasurementController()
         {
-
+            dbContext = new MongoDBContext();
         }
 
         //GET: api/Measurement { time: Time, id: deviceName}
         [HttpGet]
         public JsonResult GetMeasurement([FromQuery]MeasurementRequestDTO item)
         {
-
-            List<HelligkeitDTO> list = new List<HelligkeitDTO>();
-            HelligkeitDTO dtoVar = new HelligkeitDTO();
-            dtoVar.id = item.id;
-            dtoVar.timestamp = item.time;
-
-            list.Add(dtoVar);
-            return Json(list);
+            string id = item.id;
+            int time = item.time;
+            int timeEnd = time + 86400;
+            string json=null;
+            if (id.Contains("light"))
+            {
+                var collection = dbContext.Helligkeit(item.id);
+                var builder = Builders<HelligkeitsMeasurement>.Filter;
+                var filter = builder.Gt("timestamp", time) & builder.Lt("timestamp", timeEnd);
+                var result = collection.Find(filter).ToList();
+                json = result.ToJson();
+            }
+            if (id.Contains("temp"))
+            {
+                var collection = dbContext.Temperatur(item.id);
+                var builder = Builders<TemperaturMeasurement>.Filter;
+                var filter = builder.Gt("timestamp", time) & builder.Lt("timestamp", timeEnd);
+                var result = collection.Find(filter).ToList();
+                json = result.ToJson();
+            }
+           
+            return Json(json);
         }
 
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace UserManagement.Models
 {
+    [Table("Devices")]
     public class Device
     {
         [Key]

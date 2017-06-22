@@ -17,6 +17,26 @@ namespace UserManagement.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles");
 
+            migrationBuilder.CreateTable(
+              name: "Devices",
+              columns: table => new
+              {
+                  DeviceId = table.Column<string>(nullable: false),
+                  DeviceName = table.Column<string>(nullable: false),
+                  DeviceType = table.Column<string>(nullable: true),
+                  UserId = table.Column<string>(nullable: false)
+              },
+              constraints: table =>
+              {
+                  table.PrimaryKey("PK_DeviceId", x => new { x.DeviceId });
+                  table.ForeignKey(
+                      name: "FK_Device_AspNetUsers_UserId",
+                      column: x => x.UserId,
+                      principalTable: "AspNetUsers",
+                      principalColumn: "Id",
+                      onDelete: ReferentialAction.Cascade);
+              });
+
             //migrationBuilder.CreateTable(
             //    name: "Device",
             //    columns: table => new

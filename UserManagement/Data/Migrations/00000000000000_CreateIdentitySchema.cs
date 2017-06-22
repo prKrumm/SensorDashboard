@@ -154,17 +154,17 @@ namespace UserManagement.Data.Migrations
                name: "Devices",
                columns: table => new
                {
-                   DeviceId = table.Column<string>(nullable: false),
+                   DeviceId = table.Column<int>(nullable: false),
                    DeviceName = table.Column<string>(nullable: false),
-                   DeviceType = table.Column<string>(nullable: true),
-                   UserId = table.Column<string>(nullable: false)
+                   SensorType = table.Column<int>(nullable: true),
+                   Id = table.Column<string>(nullable: false)
                },
                constraints: table =>
                {
-                   table.PrimaryKey("PK_DeviceId", x => new { x.DeviceId});
+                   table.PrimaryKey("PK_DeviceId", x => new { x.DeviceId });
                    table.ForeignKey(
                        name: "FK_Device_AspNetUsers_UserId",
-                       column: x => x.UserId,
+                       column: x => x.Id,
                        principalTable: "AspNetUsers",
                        principalColumn: "Id",
                        onDelete: ReferentialAction.Cascade);

@@ -177,21 +177,23 @@ namespace UserManagement.Data.Migrations
 
             modelBuilder.Entity("UserManagement.Models.Device", b =>
                 {
-                    b.Property<int>("DeviceId")
+                    b.Property<string>("DeviceId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("DeviceName");
 
-                    b.Property<string>("Id");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("SensorType");
+                    b.Property<int>("DeviceType");
 
                     b.HasKey("DeviceId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Device");
                 });
+
+           
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {

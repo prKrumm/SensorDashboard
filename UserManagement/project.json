@@ -16,7 +16,9 @@
 		"Microsoft.Extensions.Logging.Debug": "1.1.2",
 		"Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
 		"Npgsql": "3.2.4",
-		"Npgsql.EntityFrameworkCore.PostgreSQL":"1.1.0"
+		"Npgsql.EntityFrameworkCore.PostgreSQL":"1.1.0",
+		"MongoDB.Driver":"2.4.4",
+		"Newtonsoft.Json":"10.0.3",
 	},
 	"frameworks": {
 		"netcoreapp1.1": {

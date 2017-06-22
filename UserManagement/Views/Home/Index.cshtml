@@ -170,6 +170,15 @@
 
             }
         }
+        @if (!Model.Any<UserManagement.Models.Device>())
+        {
+            <div id="page-wrapper">
+                <h1>Keine Devices vorhanden</h1>
+                <p>Bitte an Admin wenden unter:</p>
+                <p><a href="pa431kru@htwg-konstanz.de">Send an Email </a></p>
+            </div>
+
+        }
 
 
                 </div>

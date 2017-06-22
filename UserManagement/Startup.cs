@@ -40,9 +40,23 @@ namespace UserManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionStringEnv = Configuration.GetConnectionString("DefaultConnection");
+            if (Environment.GetEnvironmentVariable("POSTGRES_DB_HOST") != null)
+            {
+                string host = Environment.GetEnvironmentVariable("POSTGRES_DB_HOST");
+                string db = Environment.GetEnvironmentVariable("POSTGRES_DB_DB");
+                string user = Environment.GetEnvironmentVariable("POSTGRES_DB_USER");
+                string pw = Environment.GetEnvironmentVariable("POSTGRES_DB_PW");
+
+                connectionStringEnv = "Host="+host+"; Database="+db+";Username="+user+";Password="+pw+"";
+                //"Host=horton.elephantsql.com; Database=jimrrxqa;Username=jimrrxqa;Password=CeEANmNHrSnIgon04qAKwb2Qh0AOON3i"
+
+            }
+
+
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionStringEnv));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -4,6 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
+
+@using Microsoft.AspNetCore.Identity
+@using UserManagement.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
 <h2>Rückblick</h2>
 
 
@@ -23,7 +32,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.DeviceName)
@@ -42,3 +52,19 @@
 }
     </tbody>
 </table>
+}
+else
+{
+    <!-- /.panel -->
+    <div id="page-wrapper">
+        <h2>Bitte Registrieren!</h2>
+        <div class="panel-body">
+            <a asp-area="" asp-controller="Account" asp-action="Register">Register</a> |
+            <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+
+
+
+        </div>
+    </div>
+        <!-- /.panel-body -->
+}

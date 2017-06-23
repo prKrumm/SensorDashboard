@@ -10,9 +10,9 @@ namespace UserManagement.Data
 {
     public class MongoDBContext
     {
-        public string ConnectionString = "mongodb://userDSP:g8mYAonEarCBY55K@dbmongo/dbmongo";
+        public string ConnectionString = "mongodb://patt:1234@ds151651.mlab.com:51651/appharbor_bl3d3vpj";
 
-        public string DatabaseName = "dbmongo";
+        public string DatabaseName = "appharbor_bl3d3vpj";
 
 
         public static bool IsSSL { get; set; }
@@ -28,7 +28,7 @@ namespace UserManagement.Data
                     string user = Environment.GetEnvironmentVariable("MONGODB_USER");
                     string passwort = Environment.GetEnvironmentVariable("MONGODB_PASSWORD");
 
-                    ConnectionString = "mongodb://" + user + ":" + passwort + "@dbmongo/dbmongo";
+                    ConnectionString = "mongodb://" + user + ":" + passwort + "@ds151651.mlab.com:51651/appharbor_bl3d3vpj";
                 }
 
                 var mongoClient = new MongoClient(ConnectionString);

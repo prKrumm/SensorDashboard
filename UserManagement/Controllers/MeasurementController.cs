@@ -8,6 +8,7 @@ using UserManagement.Data;
 using MongoDB.Driver;
 using MongoDB.Bson;
 
+
 namespace UserManagement.Controllers
 {
     [Produces("application/json")]
@@ -33,15 +34,15 @@ namespace UserManagement.Controllers
                 var collection = dbContext.Helligkeit(item.id);
                 var builder = Builders<HelligkeitsMeasurement>.Filter;
                 var filter = builder.Gt("timestamp", time) & builder.Lt("timestamp", timeEnd);
-                var result = collection.Find(filter).ToList();
+                var result = collection.Find(filter).Project<HelligkeitsMeasurement>(Builders<HelligkeitsMeasurement>.Projection.Exclude(hamster => hamster._id)).ToList();
                 json = result.ToJson();
             }
             if (id.Contains("temp"))
             {
                 var collection = dbContext.Temperatur(item.id);
                 var builder = Builders<TemperaturMeasurement>.Filter;
-                var filter = builder.Gt("timestamp", time) & builder.Lt("timestamp", timeEnd);
-                var result = collection.Find(filter).ToList();
+                var filter = builder.Gt("timestamp", time) & builder.Lt("timestamp", timeEnd);               
+                var result = collection.Find(filter).Project<TemperaturMeasurement>(Builders<TemperaturMeasurement>.Projection.Exclude(hamster => hamster._id)).ToList();
                 json = result.ToJson();
             }
            

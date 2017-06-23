@@ -7,8 +7,8 @@ namespace UserManagement.DTOs
 {
     public class HelligkeitsMeasurement
     {
-       
-            public string uuid { get; set; }
+        public string _id { get; set; }
+        public string uuid { get; set; }
             public string sensorid { get; set; }
             public int helligkeit { get; set; }
             public int timestamp { get; set; }

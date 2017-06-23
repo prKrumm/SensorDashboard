@@ -2,19 +2,7 @@
 $(document).ready(function () {
     
 
-    var sinLayer = { label: 'sin', values: [] },
-        cosLayer = { label: 'cos', values: [] }
-
-    for (var x = 0; x <= 2 * Math.PI; x += Math.PI / 64) {
-        sinLayer.values.push({ x: x, y: Math.sin(x) + 1 });
-        cosLayer.values.push({ x: x, y: Math.cos(x) + 1 });
-    }
-
-    var chart = $('#chart').epoch({
-        type: 'area',
-        data: [sinLayer, cosLayer],
-        axes: ['left', 'right']
-    });
+    
 
     Date.now = function () { return new Date().getTime(); }
 

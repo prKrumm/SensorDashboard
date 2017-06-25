@@ -37,7 +37,7 @@ namespace EventHandler
             client = new MqttClient("m13.cloudmqtt.com", 19401, false, null, null, MqttSslProtocols.None);
             dbContext = new MongoDBContext();
             client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-            client.Connect("1237", "yvsytira", "ro0wLZInhaQo");
+            client.Connect(Guid.NewGuid().ToString(), "yvsytira", "ro0wLZInhaQo");
             client.Subscribe(new string[] { sensorTopic, "/topic_3" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
                   MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
 
